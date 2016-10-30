@@ -18,6 +18,7 @@ void ofApp::draw(){
 	ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
 	swarm.draw();
 	ofPopMatrix();
+	ofColor(10);
 	ofDrawBitmapString("framerate: " + ofToString(ofGetFrameRate()),10,10);
 }
 
@@ -31,5 +32,10 @@ void ofApp::keyPressed(int key){
 		swarm.incrementOuterSphereRadius(5);
 	} else if ( key == ',' ) {
 		swarm.decrementOuterSphereRadius(5);
+	} else if ( key == 'm' ) {
+		swarm.magneticField ++;
+		if (swarm.magneticField > 2) {
+			swarm.magneticField = 0;
+		}
 	}
 }

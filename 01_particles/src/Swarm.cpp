@@ -2,7 +2,7 @@
 
 Swarm::Swarm()
 {
-	numParticles = 4000;
+	numParticles = 500;
 	
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles.push_back(Particle());
@@ -21,6 +21,7 @@ Swarm::Swarm()
 		ofVec3f vel = particles[i].getPosition().normalized().getRotated(90, ofVec3f(0,0,1));
 		vel *=  ofMap(i,0,numParticles, 1.0, 10.0);
 		particles[i].setVelocity(vel);
+		particles[i].setMass(2.0);
 	}
 	
 	 box = ofVec3f(500, 500, 100);
@@ -39,7 +40,7 @@ void Swarm::update()
 	simulateHardSphere();
 	simulateFriction();
 	simulateLorentzForce();
-	simulateRepulsion();
+	//simulateRepulsion();
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].update();
 	}
@@ -47,17 +48,27 @@ void Swarm::update()
 
 void Swarm::draw()
 {
-	ofSetColor(50,70);
+	ofSetColor(50,150);
 	// draw simple circle
 	for ( int i=0 ; i<numParticles ; ++i ) {
-		ofDrawCircle(particles[i].getPosition(), 3);
+		ofDrawCircle(particles[i].getPosition(), 2);
 	}
 	
-	/* lines
+	ofSetColor(50,10);
+	/*/lines
 	for ( int i=1 ; i<numParticles ; ++i ) {
 		ofDrawLine(particles[i-1].getPosition(),particles[i].getPosition());
+	}*/
+	
+	ofSetColor(50,100);
+	//draw history
+	for ( int i=0 ; i<numParticles ; ++i ) {
+		//ofDrawLine(particles[i].position(),particles[i].positionHistory[j]);
+		for (int j=particles[i].positionHistory.size()-1 ; j>0 ; --j) {
+			ofDrawLine(particles[i].positionHistory[j],particles[i].positionHistory[j-1]);
+		}
 	}
-	*/
+	
 }
 
 void Swarm::simulateHardSphere()
@@ -84,7 +95,15 @@ void Swarm::simulateLorentzForce()
 {
 	//homogenous B field
 	for ( int i=0 ; i<numParticles ; ++i ) {
-		particles[i].addForce( particles[i].getVelocity().cross(magneticField(particles[i].getPosition())) * 0.1 );
+		ofVec3f b;
+		if (magneticField == 0) {
+			b = magneticField_01(particles[i].getPosition());
+		} else if (magneticField == 1) {
+			b = magneticField_02(particles[i].getPosition());
+		} else if (magneticField == 2) {
+			b = magneticField_03(particles[i].getPosition());
+		}
+		particles[i].addForce( particles[i].getVelocity().cross(b) * 0.1 );
 	}
 }
 

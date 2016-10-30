@@ -2,7 +2,9 @@
 
 #include "ofMain.h"
 
-#define SPEED_LIMIT					25
+#define SPEED_LIMIT					15
+#define MAX_NUM_HISTORY				15
+#define TIME_HISTORY				20
 
 
 class Particle{
@@ -35,7 +37,14 @@ class Particle{
 		{
 			velocity = vel;
 		}
+		void setMass(float m)
+		{
+			mass = m;
+		}
 		
+		vector <ofVec3f> positionHistory;
+		int tLastHistory;
+
 	private:
 		
 		ofVec3f force;
@@ -45,5 +54,7 @@ class Particle{
 		
 		ofVec3f position;
 		ofVec3f velocity;
+		
+		void saveHistory();
 		
 };
