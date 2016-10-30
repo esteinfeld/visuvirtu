@@ -18,6 +18,7 @@ class Swarm{
 		void simulateHardSphere();
 		void simulateFriction();
 		void simulateLorentzForce();
+		void simulateRepulsion();
 		
 		void decrementOuterSphereRadius(float dec)
 		{

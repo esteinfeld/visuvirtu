@@ -39,6 +39,7 @@ void Swarm::update()
 	simulateHardSphere();
 	simulateFriction();
 	simulateLorentzForce();
+	simulateRepulsion();
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].update();
 	}
@@ -84,5 +85,15 @@ void Swarm::simulateLorentzForce()
 	//homogenous B field
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].addForce( particles[i].getVelocity().cross(magneticField(particles[i].getPosition())) * 0.1 );
+	}
+}
+
+void Swarm::simulateRepulsion()
+{
+	for ( int i=0 ; i<numParticles ; ++i ) {
+		float depth = 100 - particles[i].getPosition().length();
+		if (depth > 0.f) {
+			particles[i].addForce(particles[i].getPosition().getNormalized() * pow(depth,2) * 0.0001);
+		}
 	}
 }
