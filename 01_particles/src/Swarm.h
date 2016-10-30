@@ -4,7 +4,7 @@
 #include "Particle.h"
 
 #define SPEED_LIMIT_DRAG			5
-#define FRICTION_FACTOR				0.0002
+#define FRICTION_FACTOR				0.002
 
 class Swarm{
 	public:
@@ -37,7 +37,7 @@ class Swarm{
 		
 		ofVec3f magneticField(ofVec3f r)
 		{
-			return ofVec3f(0,0,r.x*2-r.y)*0.001;
+			return ofVec3f(0,0,sqrt(pow(r.x,4)+pow(r.y,4))*0.00001);
 		}
 		//ofVec3f magneticField;
 		

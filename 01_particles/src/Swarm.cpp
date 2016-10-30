@@ -2,29 +2,29 @@
 
 Swarm::Swarm()
 {
-	numParticles = 3000;
+	numParticles = 4000;
 	
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles.push_back(Particle());
 	}
 	
-	
+	/*
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].setPosition(ofVec3f(ofRandomf()*100,ofRandomf()*100,0) * 3.f);
 		ofVec3f vel = particles[i].getPosition().normalized().getRotated(90, ofVec3f(0,0,1)) * ofRandomf()*3.0;
 		particles[i].setVelocity(vel);
 	}
+	*/
 	
-	/*
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].setPosition(ofVec3f(-298,0,0));
 		ofVec3f vel = particles[i].getPosition().normalized().getRotated(90, ofVec3f(0,0,1));
 		vel *=  ofMap(i,0,numParticles, 1.0, 10.0);
 		particles[i].setVelocity(vel);
 	}
-	*/
+	
 	 box = ofVec3f(500, 500, 100);
-	 outerSphereRadius = 1000;
+	 outerSphereRadius = 600;
 	 //magneticField = ofVec3f(0,0,1);
 }
 
@@ -46,7 +46,7 @@ void Swarm::update()
 
 void Swarm::draw()
 {
-	ofSetColor(50,200);
+	ofSetColor(50,70);
 	// draw simple circle
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		ofDrawCircle(particles[i].getPosition(), 3);
@@ -83,6 +83,6 @@ void Swarm::simulateLorentzForce()
 {
 	//homogenous B field
 	for ( int i=0 ; i<numParticles ; ++i ) {
-		particles[i].addForce( particles[i].getVelocity().cross(magneticField(particles[i].getPosition())) * 0.001 );
+		particles[i].addForce( particles[i].getVelocity().cross(magneticField(particles[i].getPosition())) * 0.1 );
 	}
 }
