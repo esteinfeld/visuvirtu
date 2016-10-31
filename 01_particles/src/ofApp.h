@@ -14,4 +14,5 @@ class ofApp : public ofBaseApp{
 		
 		Swarm swarm;
 		
+		ofEasyCam camera;
 };

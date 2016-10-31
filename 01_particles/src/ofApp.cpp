@@ -4,6 +4,8 @@
 void ofApp::setup(){
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
+
+	camera.setDistance(300);
 	
 }
 
@@ -14,10 +16,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofPushMatrix();
-	ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
+
+	camera.begin();
 	swarm.draw();
-	ofPopMatrix();
+	camera.end();
 	ofColor(10);
 	ofDrawBitmapString("framerate: " + ofToString(ofGetFrameRate()),10,10);
 }
@@ -37,5 +39,7 @@ void ofApp::keyPressed(int key){
 		if (swarm.magneticField > 2) {
 			swarm.magneticField = 0;
 		}
+	} else if ( key == 'r' ) {
+		swarm.resetParticles();
 	}
 }

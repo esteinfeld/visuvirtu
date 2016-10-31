@@ -3,8 +3,8 @@
 #include "ofMain.h"
 
 #define SPEED_LIMIT					15
-#define MAX_NUM_HISTORY				15
-#define TIME_HISTORY				20
+#define MAX_NUM_HISTORY				20
+#define TIME_HISTORY				25
 
 
 class Particle{

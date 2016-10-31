@@ -29,6 +29,15 @@ class Swarm{
 			outerSphereRadius += inc;
 		}
 		
+		void resetParticles()
+		{
+			for (int i=0 ; i<numParticles ; ++i) {
+				particles[i].setPosition(ofVec3f(0,0,0));
+				float angle = ofMap(i,0,numParticles,0,TWO_PI);
+				particles[i].setVelocity(ofVec3f(cos(angle),sin(angle),0));
+			}
+		}
+
 		int magneticField = 0;
 		
 	private:
@@ -44,13 +53,12 @@ class Swarm{
 		}
 		ofVec3f magneticField_02(ofVec3f r)
 		{
-			return ofVec3f(0,0,-sqrt(pow(r.x,4)+pow(r.y,4))*0.00001);
+			return ofVec3f(sqrt(r.y*r.y*r.x*r.x)*0.01,0.0,r.x)*0.001;
 		}
 		ofVec3f magneticField_03(ofVec3f r)
 		{
 			return ofVec3f(0,0,pow(r.x,1)*pow(r.y,1)*0.00002);
 		}
 		//ofVec3f magneticField;
-		
-		
+			
 };

@@ -2,7 +2,7 @@
 
 Swarm::Swarm()
 {
-	numParticles = 500;
+	numParticles = 2000;
 	
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles.push_back(Particle());
