@@ -2,10 +2,12 @@
 
 #include "ofMain.h"
 
-#define SPEED_LIMIT					15
-#define MAX_NUM_HISTORY				20
-#define TIME_HISTORY				25
+#define SPEED_LIMIT					50
+#define ACCELERATION_LIMIT			15
+#define MAX_NUM_HISTORY				190
+#define TIME_HISTORY				30
 
+#define MA_FILTER_ACC		0.98		
 
 class Particle{
 	public:
@@ -29,6 +31,10 @@ class Particle{
 		{
 			return position;
 		}
+		float getAverageAcceleration()
+		{
+			return averageAcceleration; 
+		}
 		void setPosition(ofVec3f pos)
 		{
 			position = pos;
@@ -43,6 +49,7 @@ class Particle{
 		}
 		
 		vector <ofVec3f> positionHistory;
+		vector <ofVec3f> accelerationHistory;
 		int tLastHistory;
 
 	private:
@@ -54,7 +61,10 @@ class Particle{
 		
 		ofVec3f position;
 		ofVec3f velocity;
-		
+		ofVec3f acceleration;
+
+		float averageAcceleration;
+
 		void saveHistory();
 		
 };

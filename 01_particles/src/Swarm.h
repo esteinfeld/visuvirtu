@@ -4,7 +4,7 @@
 #include "Particle.h"
 
 #define SPEED_LIMIT_DRAG			5
-#define FRICTION_FACTOR				0.02
+#define FRICTION_FACTOR				0.00002
 
 class Swarm{
 	public:
@@ -38,6 +38,19 @@ class Swarm{
 			}
 		}
 
+		void addCentralForce()
+		{
+			for ( int i=0 ; i<numParticles ; ++i ) {
+				particles[i].addForce(-particles[i].getPosition().normalize()*20.0);
+			}
+		}
+
+		void addForceZ(float z)
+		{
+			for ( int i=0 ; i<numParticles ; ++i ) {
+				particles[i].addForce(ofVec3f(0.f,0.f,z));
+			}
+		}
 		int magneticField = 0;
 		
 	private:
@@ -53,11 +66,23 @@ class Swarm{
 		}
 		ofVec3f magneticField_02(ofVec3f r)
 		{
-			return ofVec3f(sqrt(r.y*r.y*r.x*r.x)*0.01,0.0,r.x)*0.001;
+			return ofVec3f(0,0,-sqrt(pow(r.x,2)+pow(r.y,2))*0.0001);
 		}
 		ofVec3f magneticField_03(ofVec3f r)
 		{
 			return ofVec3f(0,0,pow(r.x,1)*pow(r.y,1)*0.00002);
+		}
+		ofVec3f magneticField_04(ofVec3f r)
+		{
+			return ofVec3f(0,0,sin(r.x/10.0));
+		}
+		ofVec3f magneticField_05(ofVec3f r)
+		{
+			return ofVec3f(sin(r.z/10.0),cos(r.z/10.0),0)*0.01;
+		}
+		ofVec3f magneticField_06(ofVec3f r)
+		{
+			return ofVec3f(sin(r.z/10.0),cos(r.z/10.0),0)*10.0;
 		}
 		//ofVec3f magneticField;
 			

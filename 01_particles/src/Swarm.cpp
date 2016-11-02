@@ -2,7 +2,7 @@
 
 Swarm::Swarm()
 {
-	numParticles = 2000;
+	numParticles = 380;
 	
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles.push_back(Particle());
@@ -34,10 +34,9 @@ Swarm::~Swarm()
 	
 }
 
-
 void Swarm::update()
 {
-	simulateHardSphere();
+	simulateHardSphere();		//TODO: simulateHardSphere(&particles);
 	simulateFriction();
 	simulateLorentzForce();
 	//simulateRepulsion();
@@ -60,15 +59,19 @@ void Swarm::draw()
 		ofDrawLine(particles[i-1].getPosition(),particles[i].getPosition());
 	}*/
 	
-	ofSetColor(50,100);
 	//draw history
+
+	//map average acc to alpha
+	
 	for ( int i=0 ; i<numParticles ; ++i ) {
-		//ofDrawLine(particles[i].position(),particles[i].positionHistory[j]);
+
+		float alphaFactor = ofMap(particles[i].getAverageAcceleration(), 0.0, 1.0, 0.1, 1.0, true); //clamp
 		for (int j=particles[i].positionHistory.size()-1 ; j>0 ; --j) {
+			alphaFactor = ofMap(particles[i].accelerationHistory[j].length(),0,ACCELERATION_LIMIT,0.2,1.0,true);
+			ofSetColor(50,0,100,ofMap(j,particles[i].positionHistory.size()-1,0,150,0)*alphaFactor);
 			ofDrawLine(particles[i].positionHistory[j],particles[i].positionHistory[j-1]);
 		}
 	}
-	
 }
 
 void Swarm::simulateHardSphere()
@@ -86,7 +89,7 @@ void Swarm::simulateFriction()
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		ofVec3f vel = particles[i].getVelocity();
 		if ( vel.length() > SPEED_LIMIT_DRAG ) {
-			particles[i].addForce( -vel.normalized()*pow(vel.length()-SPEED_LIMIT_DRAG,2) * FRICTION_FACTOR );
+			particles[i].addForce( -vel.normalized()*pow(vel.length()-SPEED_LIMIT_DRAG,4) * FRICTION_FACTOR );
 		}
 	}
 }
@@ -96,12 +99,16 @@ void Swarm::simulateLorentzForce()
 	//homogenous B field
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		ofVec3f b;
-		if (magneticField == 0) {
+		if (magneticField == 1) {
 			b = magneticField_01(particles[i].getPosition());
-		} else if (magneticField == 1) {
-			b = magneticField_02(particles[i].getPosition());
 		} else if (magneticField == 2) {
+			b = magneticField_02(particles[i].getPosition());
+		} else if (magneticField == 3) {
 			b = magneticField_03(particles[i].getPosition());
+		} else if (magneticField == 4) {
+			b = magneticField_04(particles[i].getPosition());
+		} else if (magneticField == 5) {
+			b = magneticField_05(particles[i].getPosition());
 		}
 		particles[i].addForce( particles[i].getVelocity().cross(b) * 0.1 );
 	}
