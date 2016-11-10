@@ -100,15 +100,15 @@ void Swarm::simulateLorentzForce()
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		ofVec3f b;
 		if (magneticField == 1) {
-			b = magneticField_01(particles[i].getPosition());
+			b = vectorField_01(particles[i].getPosition());
 		} else if (magneticField == 2) {
-			b = magneticField_02(particles[i].getPosition());
+			b = vectorField_02(particles[i].getPosition());
 		} else if (magneticField == 3) {
-			b = magneticField_03(particles[i].getPosition());
+			b = vectorField_03(particles[i].getPosition());
 		} else if (magneticField == 4) {
-			b = magneticField_04(particles[i].getPosition());
+			b = vectorField_04(particles[i].getPosition());
 		} else if (magneticField == 5) {
-			b = magneticField_05(particles[i].getPosition());
+			b = vectorField_05(particles[i].getPosition());
 		}
 		particles[i].addForce( particles[i].getVelocity().cross(b) * 0.1 );
 	}

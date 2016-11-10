@@ -43,6 +43,8 @@ void ofApp::keyPressed(int key){
 		swarm.addForceZ(-20.0);
 	} else if ( key == 'r' ) {
 		swarm.resetParticles();
+	} else if ( key == 'R' ) {
+		swarm.resetParticlesHistory();
 	} else if ( key == '1' ) {
 		//animate 1
 		// increase history length smoothly to max back to default
@@ -51,7 +53,7 @@ void ofApp::keyPressed(int key){
 	} else if ( key == '2' ) {
 		//save frame, background exlcuded
 	}
-	if ('1' <= key && key <='7') {
+	if ('0' <= key && key <='7') {
 		swarm.magneticField = key - '1' + 1;
 	}
 

@@ -37,7 +37,12 @@ class Swarm{
 				particles[i].setVelocity(ofVec3f(cos(angle),sin(angle),0));
 			}
 		}
-
+		void resetParticlesHistory()
+		{
+			for ( int i=0 ; i<numParticles ; ++i ) {
+				particles[i].resetHistory();
+			}		
+		}
 		void addCentralForce()
 		{
 			for ( int i=0 ; i<numParticles ; ++i ) {
@@ -60,27 +65,27 @@ class Swarm{
 		ofVec3f box; 	//box at (0,0,0) min = -x max = x
 		float outerSphereRadius;
 		
-		ofVec3f magneticField_01(ofVec3f r)
+		ofVec3f vectorField_01(ofVec3f r)
 		{
-			return ofVec3f(0,0,sqrt(pow(r.x,4)+pow(r.y,4))*0.00001);
+			return ofVec3f(0,0,sqrt(pow(r.x,2)+pow(abs(r.y),3))*0.00055);
 		}
-		ofVec3f magneticField_02(ofVec3f r)
+		ofVec3f vectorField_02(ofVec3f r)
 		{
-			return ofVec3f(0,0,-sqrt(pow(r.x,2)+pow(r.y,2))*0.0001);
+			return ofVec3f(pow(r.length()/1000.0,3),0,0);
 		}
-		ofVec3f magneticField_03(ofVec3f r)
+		ofVec3f vectorField_03(ofVec3f r)
 		{
-			return ofVec3f(0,0,pow(r.x,1)*pow(r.y,1)*0.00002);
+			return ofVec3f(0,0,pow(2.13,r.x/1000.0));
 		}
-		ofVec3f magneticField_04(ofVec3f r)
+		ofVec3f vectorField_04(ofVec3f r)
 		{
-			return ofVec3f(0,0,sin(r.x/10.0));
+			return ofVec3f(0,0,pow(sin(r.x/100.0),r.z/1000.0));
 		}
-		ofVec3f magneticField_05(ofVec3f r)
+		ofVec3f vectorField_05(ofVec3f r)
 		{
-			return ofVec3f(sin(r.z/10.0),cos(r.z/10.0),0)*0.01;
+			return ofVec3f(sin(r.z/10.0)*cos(r.z/10.0),0)*0.1;
 		}
-		ofVec3f magneticField_06(ofVec3f r)
+		ofVec3f vectorField_06(ofVec3f r)
 		{
 			return ofVec3f(sin(r.z/10.0),cos(r.z/10.0),0)*10.0;
 		}

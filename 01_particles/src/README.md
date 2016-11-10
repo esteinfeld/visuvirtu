@@ -4,3 +4,5 @@
 	 -> scale magnet fields 
 	 -> set num particles
 	 -> set max history
+
+	add more reset variants

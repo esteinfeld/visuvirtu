@@ -4,8 +4,8 @@
 
 #define SPEED_LIMIT					50
 #define ACCELERATION_LIMIT			15
-#define MAX_NUM_HISTORY				190
-#define TIME_HISTORY				30
+#define MAX_NUM_HISTORY				80
+#define TIME_HISTORY				38
 
 #define MA_FILTER_ACC		0.98		
 
@@ -48,6 +48,14 @@ class Particle{
 			mass = m;
 		}
 		
+		void resetHistory()
+		{
+			for ( int i=0 ; i<MAX_NUM_HISTORY ; ++i ) {
+				positionHistory.clear();
+				accelerationHistory.clear();
+			}
+		}
+
 		vector <ofVec3f> positionHistory;
 		vector <ofVec3f> accelerationHistory;
 		int tLastHistory;
