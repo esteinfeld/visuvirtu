@@ -40,6 +40,7 @@ void Swarm::update()
 	simulateFriction();
 	simulateLorentzForce();
 	//simulateRepulsion();
+	//simulateGridForce();
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		particles[i].update();
 	}
@@ -47,10 +48,10 @@ void Swarm::update()
 
 void Swarm::draw()
 {
-	ofSetColor(50,150);
+	ofSetColor(50,50);
 	// draw simple circle
 	for ( int i=0 ; i<numParticles ; ++i ) {
-		ofDrawCircle(particles[i].getPosition(), 2);
+		//ofDrawCircle(particles[i].getPosition(), 1);
 	}
 	
 	ofSetColor(50,10);
@@ -61,8 +62,8 @@ void Swarm::draw()
 	
 	//draw history
 
-	//map average acc to alpha
-	
+		//map average acc to alpha
+	/*
 	for ( int i=0 ; i<numParticles ; ++i ) {
 
 		float alphaFactor = ofMap(particles[i].getAverageAcceleration(), 0.0, 1.0, 0.1, 1.0, true); //clamp
@@ -70,6 +71,15 @@ void Swarm::draw()
 			alphaFactor = ofMap(particles[i].accelerationHistory[j].length(),0,ACCELERATION_LIMIT,0.2,1.0,true);
 			ofSetColor(50,0,100,ofMap(j,particles[i].positionHistory.size()-1,0,150,0)*alphaFactor);
 			ofDrawLine(particles[i].positionHistory[j],particles[i].positionHistory[j-1]);
+		}
+	}
+*/
+		//fade out
+	for ( int i=0 ; i<numParticles ; ++i ) {
+
+		for (int j=0 ; j<particles[i].positionHistory.size()-1 ; ++j) {
+			ofSetColor(50,0,100,ofMap(j, particles[i].positionHistory.size()-1,0,150,0));
+			ofDrawLine(particles[i].positionHistory[j], particles[i].positionHistory[j-1]);
 		}
 	}
 }
@@ -114,12 +124,28 @@ void Swarm::simulateLorentzForce()
 	}
 }
 
+
 void Swarm::simulateRepulsion()
 {
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		float depth = 100 - particles[i].getPosition().length();
 		if (depth > 0.f) {
 			particles[i].addForce(particles[i].getPosition().getNormalized() * pow(depth,2) * 0.0001);
+		}
+	}
+}
+
+void Swarm::simulateGridForce()
+{
+	float factor = 0.1;
+	float scale = 10.f;
+	for ( int i=0 ; i<numParticles ; ++i ) {
+		float x = particles[i].getPosition().x;
+		float z = ( cos(x*factor) + cos(3*x*factor)/9.0 + cos(5*x*factor)/25.0 );
+		if ( z > 0.6 ) {
+			particles[i].addForce(ofVec3f(1.0, 0.0, 0.0));
+		} else if ( z < -0.6 ) {
+			particles[i].addForce(ofVec3f(-1.0, 0.0, 0.0));
 		}
 	}
 }

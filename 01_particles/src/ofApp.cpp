@@ -45,6 +45,10 @@ void ofApp::keyPressed(int key){
 		swarm.resetParticles();
 	} else if ( key == 'R' ) {
 		swarm.resetParticlesHistory();
+	} else if ( key == 'f' ) {
+		swarm.setParticlesLine(1000);
+	} else if ( key == 'g' ) {
+		swarm.setParticlesLine(10);
 	} else if ( key == '1' ) {
 		//animate 1
 		// increase history length smoothly to max back to default

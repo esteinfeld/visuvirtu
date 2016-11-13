@@ -19,7 +19,9 @@ class Swarm{
 		void simulateFriction();
 		void simulateLorentzForce();
 		void simulateRepulsion();
-		
+		void simulateGridForce();
+
+
 		void decrementOuterSphereRadius(float dec)
 		{
 			outerSphereRadius -= dec;
@@ -42,6 +44,13 @@ class Swarm{
 			for ( int i=0 ; i<numParticles ; ++i ) {
 				particles[i].resetHistory();
 			}		
+		}
+		void setParticlesLine(float length)
+		{
+			for (int i=0 ; i<numParticles ; ++i) {
+				particles[i].setPosition(ofVec3f(ofMap(i,0,numParticles,-length/2,length/2),0,0));
+				particles[i].setVelocity(ofVec3f(0,2,0));
+			}	
 		}
 		void addCentralForce()
 		{
