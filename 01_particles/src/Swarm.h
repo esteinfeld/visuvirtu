@@ -3,8 +3,8 @@
 #include "ofMain.h"
 #include "Particle.h"
 
-#define SPEED_LIMIT_DRAG			5
-#define FRICTION_FACTOR				0.00002
+#define SPEED_LIMIT_DRAG			0.8
+#define FRICTION_FACTOR				0.00005
 
 class Swarm{
 	public:
@@ -52,6 +52,12 @@ class Swarm{
 				particles[i].setVelocity(ofVec3f(0,2,0));
 			}	
 		}
+		void setParticlesRandomXY()
+		{
+			for (int i=0 ; i<numParticles ; ++i) {
+				particles[i].setPosition(ofVec3f(ofRandomf()*4000,ofRandomf()*4000,0));
+				particles[i].setVelocity(ofVec3f(0,0,0));
+			}			}
 		void addCentralForce()
 		{
 			for ( int i=0 ; i<numParticles ; ++i ) {

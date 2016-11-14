@@ -11,7 +11,7 @@ class ofApp : public ofBaseApp{
 		void draw();
 
 		void keyPressed(int key);
-		
+		void touchMoved(ofTouchEventArgs &touch);
 		Swarm swarm;
 		
 		ofEasyCam camera;

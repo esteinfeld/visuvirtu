@@ -4,8 +4,8 @@
 
 #define SPEED_LIMIT					50
 #define ACCELERATION_LIMIT			15
-#define MAX_NUM_HISTORY				80
-#define TIME_HISTORY				38
+#define MAX_NUM_HISTORY				20
+#define TIME_HISTORY				60
 
 #define MA_FILTER_ACC		0.98		
 

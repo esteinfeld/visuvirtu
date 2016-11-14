@@ -37,14 +37,16 @@ void ofApp::keyPressed(int key){
 		swarm.decrementOuterSphereRadius(5);
 	} else if ( key == '#' ) {
 		swarm.addCentralForce();
-	} else if ( key == 'z') {
+	} else if ( key == 'z' ) {
 		swarm.addForceZ(20.0);
-	} else if ( key == 'Z') {
+	} else if ( key == 'Z' ) {
 		swarm.addForceZ(-20.0);
 	} else if ( key == 'r' ) {
 		swarm.resetParticles();
 	} else if ( key == 'R' ) {
 		swarm.resetParticlesHistory();
+	} else if ( key == 't' ) {
+		swarm.setParticlesRandomXY();
 	} else if ( key == 'f' ) {
 		swarm.setParticlesLine(1000);
 	} else if ( key == 'g' ) {
@@ -56,10 +58,16 @@ void ofApp::keyPressed(int key){
 		// aim: save a picture for a longer period
 	} else if ( key == '2' ) {
 		//save frame, background exlcuded
+	} else if (key  == 'q' ) {
+		ofExit();
 	}
 	if ('0' <= key && key <='7') {
 		swarm.magneticField = key - '1' + 1;
 	}
 
 	//camera animation
+}
+
+void ofApp::touchMoved(ofTouchEventArgs &touch){
+	cout << "tada" << endl;
 }
