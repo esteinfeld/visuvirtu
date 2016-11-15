@@ -1,16 +1,20 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup()
+{
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 
-	camera.setDistance(300);
-	
+	camera.setDistance(800);
+	receiver.setup(8000);
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
+	updateOscReceiver();
+
 	swarm.update();
 }
 
@@ -25,8 +29,23 @@ void ofApp::draw(){
 	ofDrawBitmapString("magnetic field: " + ofToString(swarm.magneticField),10,40);
 }
 
+void ofApp::updateOscReceiver()
+{
+	while( receiver.hasWaitingMessages() ) {
+		ofxOscMessage m;
+		receiver.getNextMessage(&m);
+		if ( m.getAddress() == "/5/mf5/1" ) {
+			swarm.FRICTION_FACTOR = m.getArgAsFloat(0)*0.08;			
+		} else if ( m.getAddress() == "/5/mf5/2" ) {
+			swarm.gridForceFactor = m.getArgAsFloat(0)*0.18;			
+		}
+
+	}
+}
+
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key)
+{
 	if (key == '+') {
 		swarm.incrementOuterSphereRadius(100);
 	} else if ( key == '-' ) {

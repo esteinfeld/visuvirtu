@@ -138,11 +138,10 @@ void Swarm::simulateRepulsion()
 void Swarm::simulateGridForce()
 {
 	
-	float factor = 0.008;
 	float scale = 10.f;
 	for ( int i=0 ; i<numParticles ; ++i ) {
 		float x = particles[i].getPosition().x;
-		float z = ( cos(x*factor) + cos(3*x*factor)/9.0 + cos(5*x*factor)/25.0 );
+		float z = ( cos(x*gridForceFactor) + cos(3*x*gridForceFactor)/9.0 + cos(5*x*gridForceFactor)/25.0 );
 		if ( z > 0.9 ) {
 			particles[i].addForce(ofVec3f(0.0, 3.0, 0.0));
 		} else if ( z < -0.9 ) {
@@ -150,7 +149,7 @@ void Swarm::simulateGridForce()
 		}
 
 		float y = particles[i].getPosition().y;
-		z = ( cos(y*factor) + cos(3*y*factor)/9.0 + cos(5*y*factor)/25.0 );
+		z = ( cos(y*gridForceFactor) + cos(3*y*gridForceFactor)/9.0 + cos(5*y*gridForceFactor)/25.0 );
 		if ( z > 0.9 ) {
 			particles[i].addForce(ofVec3f(3.0, 0.0, 0.0));
 		} else if ( z < -0.9 ) {

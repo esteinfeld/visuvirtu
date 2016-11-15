@@ -4,7 +4,6 @@
 #include "Particle.h"
 
 #define SPEED_LIMIT_DRAG			0.8
-#define FRICTION_FACTOR				0.00005
 
 class Swarm{
 	public:
@@ -73,6 +72,9 @@ class Swarm{
 		}
 		int magneticField = 0;
 		
+		double FRICTION_FACTOR = 0.00005;
+		float gridForceFactor = 0.08;
+
 	private:
 		int numParticles;
 		vector <Particle> particles;

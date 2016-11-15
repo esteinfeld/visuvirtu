@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Swarm.h"
+#include "ofxOsc.h"
 
 class ofApp : public ofBaseApp{
 
@@ -10,9 +11,14 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
+		void updateOscReceiver();
+
 		void keyPressed(int key);
 		void touchMoved(ofTouchEventArgs &touch);
 		Swarm swarm;
 		
 		ofEasyCam camera;
+
+		ofxOscReceiver receiver;
+
 };
